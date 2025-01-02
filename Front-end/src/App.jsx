@@ -12,11 +12,13 @@ import Product from './pages/Product'
 
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import Searchbar from './components/Searchbar'
 
 const App = () => {
   return (
     <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
       <Navbar />                {/* firstly, this component will render, then go to route '/' means Home.jsx, then go to Home.jsx */}
+      <Searchbar />
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/about' element={<About />}></Route>
