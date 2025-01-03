@@ -6,7 +6,7 @@ import ProductItem from "../components/ProductItem";
 import { Link } from "react-router-dom";
 
 const Collection = () => {
-  const { products } = useContext(ShopContext);
+  const { products, search, showSearch } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
@@ -57,6 +57,10 @@ const Collection = () => {
       );
     }
 
+    if (search && showSearch) {
+      productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+    }
+
     if (subCategory.length > 0) {
       productsCopy = productsCopy.filter((item) =>
         subCategory.includes(item.subCategory)
@@ -84,7 +88,7 @@ const Collection = () => {
 
   useEffect(() => {
     applyFilter();
-  }, [category, subCategory]);
+  }, [category, subCategory, showSearch, search]);
 
   useEffect(() => {
     sortProducts();
