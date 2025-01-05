@@ -70,6 +70,13 @@ const Collection = () => {
     setFilterProducts(productsCopy);
   };
 
+  {
+    /* --------- Custom Event Handler "const sortProducts = () =>" VS useEffect ------- 
+    here below, sortProducts is an event handler which calls when user given an input or take an action like user adds an item in cart by clicking on ADD TO CART button.....
+    whereas
+    useEffect is a lifecycle hook that calls or triggers automatically to component mount, update or to handle side effects when a component renders.
+  */}
+
   const sortProducts = () => {
     let filterProductCopy = filterProducts.slice();
 

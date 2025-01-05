@@ -14,9 +14,13 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Searchbar from './components/Searchbar'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 const App = () => {
   return (
     <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+      <ToastContainer />
       <Navbar />                {/* firstly, this component will render, then go to route '/' means Home.jsx, then go to Home.jsx */}
       <Searchbar />
       <Routes>

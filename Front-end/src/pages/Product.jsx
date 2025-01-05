@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../contexts/ShopContext";
 import { assets } from "../assets/assets";
+import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency } = useContext(ShopContext);
+  const { products, currency, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
@@ -86,10 +87,53 @@ const Product = () => {
             </div>
           </div>
 
-            {/* <button className="bg-black- text-white py-3 px-8 text-small active:bg-gray-700">ADD TO CART</button> */}
+          <button
+            onClick={() => addToCart(productData._id, size)}
+            className="bg-black text-white py-3 px-8 text-small active:bg-gray-700"
+          >
+            ADD TO CART
+          </button>
+          <hr className="mt-8 sm:w-3/5" />
 
+          <div className="flex flex-col gap-1 text-sm text-gray-500">
+            <p>100% Original product.</p>
+            <p>Cash delivery is availableon this Product.</p>
+            <p>Easy return & exchange policy within 7 days.</p>
+          </div>
         </div>
       </div>
+
+      {/* ----------------------- Description and Review Section ----------------------- */}
+
+      <div className="mt-20">
+        <div className="flex">
+          <b className="border text-sm px-5 py-3">Description</b>
+          <p className="border text-sm px-5 py-3">Reviews (122)</p>
+        </div>
+        <div className="flex flex-col border px-6 py-6 gap-4 text-sm text-gray-500">
+          <p>
+            Discover the latest trends in fashion with our exclusive collection
+            of clothing, accessories, and footwear. Whether you're looking for
+            casual wear, office attire, or something for a special occasion,
+            we've got you covered. Shop with ease, explore our handpicked
+            categories, and enjoy fast shipping, secure payments, and excellent
+            customer service. Redefine your style with our premium-quality
+            products, crafted to perfection for every occasion.
+          </p>
+          <p>
+            Explore trendy fashion essentials with our exclusive collection of
+            clothing, accessories, and footwear. Shop the latest styles, enjoy
+            secure payments, and fast delivery for a hassle-free experience.
+          </p>
+        </div>
+      </div>
+
+      {/* ----------------------- Display Related Products ----------------------- */}
+
+      <RelatedProducts
+        category={productData.category}
+        subCategory={productData.subCategory}
+      />
     </div>
   ) : (
     <div className="opacity-0"></div>
