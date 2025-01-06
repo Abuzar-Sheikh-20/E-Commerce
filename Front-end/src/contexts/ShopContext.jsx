@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/assets";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const ShopContext = createContext(); // This is ShopContext API, you created
 
@@ -10,6 +11,8 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
+  const navigate = useNavigate();
+
   {
     /* Added "{}" empty object here to add objects in it. */
   }
@@ -19,59 +22,82 @@ const ShopContextProvider = (props) => {
   }
 
   const addToCart = async (itemId, size) => {
-
     if (!size) {
-      toast.error('Select Product Size!')
+      toast.error("Select Product Size!");
       return;
     }
 
-    let cartData = structuredClone(cartItems);         {/* structuredClone used to deep copy of any object. */}
-
-    if (cartData[itemId]) {                   {/* If item ID presents */}
-      if (cartData[itemId] [size]) {          {/* If size of that item ID presents */}
-        cartData[itemId][size] += 1;          {/* Increase it with 1 */}
-      }
-      else {
-        cartData[itemId][size] =1;            {/* If size of that item ID is not presents then set  that item to 1 */}
-      }
+    let cartData = structuredClone(cartItems);
+    {
+      /* structuredClone used to deep copy of any object. */
     }
-    else {
-      cartData[itemId] = {};     {/* If that item ID is not created/ presents then add an item of this ID and size */}
-      cartData[itemId][size] = 1;       
+
+    if (cartData[itemId]) {
+      {
+        /* If item ID presents */
+      }
+      if (cartData[itemId][size]) {
+        {
+          /* If size of that item ID presents */
+        }
+        cartData[itemId][size] += 1;
+        {
+          /* Increase it with 1 */
+        }
+      } else {
+        cartData[itemId][size] = 1;
+        {
+          /* If size of that item ID is not presents then set  that item to 1 */
+        }
+      }
+    } else {
+      cartData[itemId] = {};
+      {
+        /* If that item ID is not created/ presents then add an item of this ID and size */
+      }
+      cartData[itemId][size] = 1;
     }
 
     setCartItems(cartData);
-
   };
 
-const getCartCounts = () => {
+  const getCartCounts = () => {
+    let totalCounts = 0;
 
-  let totalCounts = 0;
-
-  for (const items in cartItems){
-    for (const item in cartItems[items]){
-      try{
-        if (cartItems[items][item] > 0) {
-          totalCounts += cartItems[items][item]
-        }
-      }
-      catch (error) {
-
+    for (const items in cartItems) {
+      for (const item in cartItems[items]) {
+        try {
+          if (cartItems[items][item] > 0) {
+            totalCounts += cartItems[items][item];
+          }
+        } catch (error) {}
       }
     }
-  }
-  return totalCounts;
-};
+    return totalCounts;
+  };
 
-const updateQuantity = async (itemId, size, quantity) => {
-  let cartData = structuredClone(cartItems);
+  const updateQuantity = async (itemId, size, quantity) => {
+    let cartData = structuredClone(cartItems);
 
-  cartData[itemId][size] = quantity;
+    cartData[itemId][size] = quantity;
 
-  setCartItems(cartData);
+    setCartItems(cartData);
+  };
 
-} 
-
+  const getCartAmount = () => {
+    let totalAmount = 0;
+    for (const items in cartItems) {
+      let itemInfo = products.find((product) => product._id === items);
+      for (const item in cartItems[items]) {
+        try {
+          if (cartItems[items][item] > 0) {
+            totalAmount += itemInfo.price * cartItems[items][item];
+          }
+        } catch (error) {}
+      }
+    }
+    return totalAmount;
+  };
 
   const value = {
     // These values will pass where you'll use this (ShopContext) API
@@ -88,7 +114,10 @@ const updateQuantity = async (itemId, size, quantity) => {
     addToCart,
 
     getCartCounts,
-    updateQuantity
+    updateQuantity,
+    getCartAmount,
+
+    navigate
   };
 
   return (
