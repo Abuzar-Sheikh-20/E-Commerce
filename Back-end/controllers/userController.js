@@ -3,6 +3,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+
 // const token = jwt.sign({_id}, process.env.JWT_SECRET_KEY);    // not recommended
 
 // Here's recommended type
@@ -86,6 +87,8 @@ const registerUser = async (req, res) => {
 };
 
 // Routes for Admin login
-const adminLogin = async (req, res) => {};
+const adminLogin = async (req, res) => {
+  
+};
 
 export { loginUser, registerUser, adminLogin };

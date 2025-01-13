@@ -10,6 +10,6 @@ const userSchema = new mongoose.Schema(
   { minimize: false } // be default MongoDB minimizes the empty objects and do not store them, that's why, here i did it falsy means it'd be store empty objects also.
 );
 
-const userModel = mongoose.models.user || mongoose.model('user', userSchema);
+const userModel = mongoose.models.user || mongoose.model("user", userSchema);
 
-export default  userModel;
+export default userModel;
