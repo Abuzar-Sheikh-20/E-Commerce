@@ -1,5 +1,11 @@
 import jwt from "jsonwebtoken";
 
+{
+  /* jwt.verify(token, process.env.JWT_SECRET_KEY): Verifies the token using the secret key and decodes it if valid.
+decoded !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD: Checks if the decoded token matches the admin credentials. If not, returns "Not Authorized."
+next(): Calls the next middleware if everything is valid. */
+}
+
 const adminAuth = async (req, res, next) => {
   try {
     // Get token from headers
