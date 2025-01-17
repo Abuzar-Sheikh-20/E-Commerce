@@ -95,7 +95,7 @@ const Collection = () => {
 
   useEffect(() => {
     applyFilter();
-  }, [category, subCategory, showSearch, search]);        {/* The effect (applyFilter) will only run when one of any variables [category, subCategory, showSearch or search] changes. */}
+  }, [category, subCategory, showSearch, search, products]);        {/* The effect (applyFilter) will only run when one of any variables [category, subCategory, showSearch or search] changes. */}
 
   useEffect(() => {
     sortProducts();

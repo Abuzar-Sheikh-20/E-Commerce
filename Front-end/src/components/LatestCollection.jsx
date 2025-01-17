@@ -9,7 +9,7 @@ const LatestCollection = () => {
 
   useEffect(() => {
     setLatestProducts(products.slice(0, 10)); // it will take 10 products from assests because we're taking product from ShopContext and this refers to the assests directory.
-  }, []); // bcz of this Array, products will pass individually (one by one)
+  }, [products]); // bcz of this Array, products will pass individually (one by one)
 
   return (
     <div className="my-10">
