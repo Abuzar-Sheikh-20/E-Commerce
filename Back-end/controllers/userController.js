@@ -6,8 +6,8 @@ import jwt from "jsonwebtoken";
 // const token = jwt.sign({_id}, process.env.JWT_SECRET_KEY);    // not recommended
 
 // Here's recommended type
-const createToken = (_id) => {
-  return jwt.sign({ id: _id }, process.env.JWT_SECRET_KEY);
+const createToken = (id) => {
+  return jwt.sign({id}, process.env.JWT_SECRET_KEY);
 };
 
 // Routes for user login
