@@ -12,19 +12,21 @@ const Cart = () => {
   useEffect(() => {
     const tempData = [];
 
-    for (const items in cartItems) {
-      for (const item in cartItems[items]) {
-        if (cartItems[items][item]) {
-          tempData.push({
-            _id: items,
-            size: item,
-            quantity: cartItems[items][item],
-          });
+    if (products.length > 0) {
+      for (const items in cartItems) {
+        for (const item in cartItems[items]) {
+          if (cartItems[items][item]) {
+            tempData.push({
+              _id: items,
+              size: item,
+              quantity: cartItems[items][item],
+            });
+          }
         }
       }
+      setCardData(tempData);
     }
-    setCardData(tempData);
-  }, [cartItems]);
+  }, [cartItems, products]);
 
   return (
     <div className="border-top pt-14">
@@ -44,7 +46,11 @@ const Cart = () => {
               className="border-t border-b py-4 text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
             >
               <div className="flex items-start gap-6">
-                <img className="w-16 sm:w-20" src={productData.image[0]} alt="" />
+                <img
+                  className="w-16 sm:w-20"
+                  src={productData.image[0]}
+                  alt=""
+                />
                 <div>
                   <p className="text-xs sm:text-lg font-medium">
                     {productData.name}
@@ -64,7 +70,11 @@ const Cart = () => {
                 onChange={(e) =>
                   e.target.value === "" || e.target.value === 0
                     ? null
-                    : updateQuantity(item._id, item.size, Number(e.target.value))
+                    : updateQuantity(
+                        item._id,
+                        item.size,
+                        Number(e.target.value)
+                      )
                 }
                 className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
                 type="number"
@@ -81,7 +91,9 @@ const Cart = () => {
           );
         })
       ) : (
-        <p className="text-start text-gray-500 mx-[25vw] my-10">No orders added, Please add some products first</p>
+        <p className="text-start text-gray-500 mx-[25vw] my-10">
+          No orders added, Please add some products first
+        </p>
       )}
 
       <div className="flex justify-end my-20">

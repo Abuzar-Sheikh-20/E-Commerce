@@ -15,10 +15,10 @@ const Navbar = () => {
   } = useContext(ShopContext);
 
   const logout = () => {
+    navigate("/login");
     localStorage.removeItem("token");
     setToken("");
     setCartItems({});
-    navigate("/login");
   };
 
   return (
@@ -58,22 +58,25 @@ const Navbar = () => {
         />
 
         <div className="group relative">
-          <NavLink to={"./login"}>
+          
             <img
+              onClick={() => (token ? null : navigate("/login"))}
               src={assets.profile_icon}
               className="w-5 cursor-pointer"
               alt=""
             />
-          </NavLink>
-          <div className="hidden group-hover:block absolute dropdown-menu right-0 pt-2">
-            <div className="flex flex-col w-36 gap-2 px-5 py-3 bg-slate-100 text-gray-500">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p className="cursor-pointer hover:text-black">Orders</p>
-              <p onClick={logout} className="cursor-pointer hover:text-black">
-                Logout
-              </p>
+            
+          {token && 
+            <div className="hidden group-hover:block absolute dropdown-menu right-0 pt-2">
+              <div className="flex flex-col w-36 gap-2 px-5 py-3 bg-slate-100 text-gray-500">
+                <p className="cursor-pointer hover:text-black">My Profile</p>
+                <p onClick={()=> navigate('/orders')} className="cursor-pointer hover:text-black">Orders</p>
+                <p onClick={logout} className="cursor-pointer hover:text-black">
+                  Logout
+                </p>
+              </div>
             </div>
-          </div>
+          }
         </div>
 
         <Link to="/cart" className="relative">

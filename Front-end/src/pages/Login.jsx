@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const Login = () => {
-  const [currentState, setCurrentState] = useState("Sign Up");
+  const [currentState, setCurrentState] = useState("Login");
   const { token, setToken, navigate, backend_url } = useContext(ShopContext);
 
   const [name, setName] = useState("");
@@ -49,12 +49,6 @@ const Login = () => {
   useEffect(() => {
     if (token) {
       navigate("/");
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (!token && localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token")); // now we don't have to sign in again and again.
     }
   }, [token]);
 
