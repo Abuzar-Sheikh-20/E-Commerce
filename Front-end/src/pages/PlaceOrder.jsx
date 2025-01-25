@@ -20,20 +20,20 @@ const PlaceOrder = () => {
         </div>
 
         <div className="flex gap-3">
-          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='First Name' />
+          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='First Name' required />
           <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='Last Name' />
         </div>
           <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="email" placeholder='Email Address:' />
-          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='Street' />
+          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='Street'required />
         <div className="flex gap-3">
-          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='City' />
-          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='State' />
+          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='City' required/>
+          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='State' required/>
         </div>
         <div className="flex gap-3">
-          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="Number" placeholder='Zipcode' />
+          <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="Number" placeholder='Zipcode' required/>
           <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="text" placeholder='Country' />
         </div>
-        <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="Number" placeholder='Phone' />
+        <input className='border border-gray-300 rounded px-3.5 py-1.5 w-full' type="Number" placeholder='Phone' required/>
 
       </div>
       
