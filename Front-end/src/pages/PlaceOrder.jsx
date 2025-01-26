@@ -70,9 +70,14 @@ const PlaceOrder = () => {
         case "cod":
           const response = await axios.post(
             backend_url + "/api/order/place",
+
             orderData,
-            { headers: { token } }
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
           );
+
+          console.log(response.data);
 
           if (response.data.success) {
             setCartItems({});
