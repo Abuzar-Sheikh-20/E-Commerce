@@ -22,8 +22,8 @@ const Login = () => {
           password,
         });
         if (response.data.success) {
-          setToken(response.data.token);
-          localStorage.setItem("token", response.data.token);
+          setToken(response.data.token); // Save token in context
+          localStorage.setItem("token", response.data.token); // Save token in localStorage
         } else {
           toast.error(response.data.message);
         }
@@ -34,8 +34,8 @@ const Login = () => {
         });
 
         if (response.data.success) {
-          setToken(response.data.token);
-          localStorage.setItem("token", response.data.token);
+          setToken(response.data.token); // Save token in context
+          localStorage.setItem("token", response.data.token); // Save token in localStorage
         } else {
           toast.error(response.data.message);
         }
@@ -47,10 +47,15 @@ const Login = () => {
   };
 
   useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken && !token) {
+      setToken(storedToken);
+    }
+
     if (token) {
       navigate("/");
     }
-  }, [token]);
+  }, [token, setToken, navigate]); // This will run on token change
 
   return (
     <form
