@@ -47,7 +47,7 @@ const Navbar = () => {
           <p>Contact</p>
           <hr className="w-3/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
-        <NavLink to="https://e-commerce-admin-topaz-kappa.vercel.app/" className="flex flex-col items-center border px-4 rounded-md bg-gray-200 font-bold gap-1">
+        <NavLink to="https://e-commerce-admin-flame-eta.vercel.app/" className="flex flex-col items-center border px-4 rounded-md bg-gray-200 font-bold gap-1">
           <p>Admin Panel</p>
         </NavLink>
       </ul>
@@ -145,7 +145,7 @@ const Navbar = () => {
           <NavLink
             onClick={() => setVisible(false)}
             className="text-sm py-2 pl-6 border border-2 font-bold"
-            to={"https://e-commerce-admin-topaz-kappa.vercel.app/"}
+            to={"https://e-commerce-admin-flame-eta.vercel.app/"}
           >
             ADMIN Panel
           </NavLink>
