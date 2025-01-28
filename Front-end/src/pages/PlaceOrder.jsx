@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
@@ -19,23 +19,30 @@ const PlaceOrder = () => {
     products,
   } = useContext(ShopContext);
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    street: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    country: "",
-    phone: "",
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem("formData");
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          firstName: "",
+          lastName: "",
+          email: "",
+          street: "",
+          city: "",
+          state: "",
+          zipcode: "",
+          country: "",
+          phone: "",
+        };
   });
 
   const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    setFormData((data) => ({ ...data, [name]: value }));
+    const { name, value } = event.target;
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [name]: value };
+      localStorage.setItem("formData", JSON.stringify(updatedData));
+      return updatedData;
+    });
   };
 
   const onSubmitHandler = async (event) => {
@@ -77,14 +84,32 @@ const PlaceOrder = () => {
             }
           );
 
-          console.log(response.data);
-
           if (response.data.success) {
             setCartItems({});
             navigate("/orders");
           } else {
             toast.error(response.data.message);
           }
+          break;
+
+        case "stripe":
+          const responseStripe = await axios.post(
+            backend_url + "/api/order/stripe",
+
+            orderData,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
+          if (responseStripe.data.success) {
+            const { session_url } = responseStripe.data;
+            window.location.replace(session_url); // to change the current URL
+          } else {
+            toast.error(responseStripe.data.message);
+          }
+
+          console.log(response.data);
           break;
 
         default:
@@ -199,7 +224,7 @@ const PlaceOrder = () => {
 
       {/* ------------------------ Right Side ------------------------  */}
 
-      <div className="mt-8">
+      <div className="sm:ml-6 mt-8">
         <div className="mt-8 min-w-80">
           <CartTotal />
         </div>
@@ -207,32 +232,55 @@ const PlaceOrder = () => {
         <div className="mt-12">
           <Title text1={"PAYMENT"} text2={"METHOD"} />
 
+          {/* -----------------------Button for Stripe----------------------- */}
+
           <div className="flex flex-col gap-4 lg:flex-row">
-            <div
-              onClick={() => setMethod("stripe")}
-              className="flex items-center gap-3 border py-2 px-3 cursor-pointer"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  method === "stripe" ? "bg-green-700" : ""
-                }`}
-              ></p>
-              <img className="h-5 mx-4" src={assets.stripe_logo} alt="" />
+            <div className="border">
+              <div
+                onClick={() => setMethod("stripe")}
+                className=" flex items-center gap-2 py-2 px-3 cursor-pointer"
+              >
+                <p
+                  className={`border min-w-3.5 h-3.5 rounded-full ${
+                    method === "stripe" ? "bg-green-700" : ""
+                  }`}
+                ></p>
+
+                <img
+                  className="h-5 object-cover"
+                  src={assets.stripe_logo}
+                  alt=""
+                />
+              </div>
+              <p className="text-sm text-gray-300 text-center px-3">
+                Little Issue occured, will resolve soon
+              </p>
             </div>
+
+            {/* -----------------------Button for Razorpay----------------------- */}
+
+            <div className="border">
             <div
               onClick={() => setMethod("razorpay")}
-              className="flex items-center gap-3 border py-2 px-3 cursor-pointer"
+              className="flex items-center gap-3 py-2 px-3 cursor-pointer"
             >
               <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
+                className={`border min-w-3.5 h-3.5 rounded-full ${
                   method === "razorpay" ? "bg-green-700" : ""
                 }`}
               ></p>
               <img className="h-5 mx-4" src={assets.razorpay_logo} alt="" />
             </div>
+            <p className="text-sm text-gray-300 text-center px-3">
+                Little Issue occured, will resolve soon
+              </p>
+            </div>
+
+            {/* -----------------------Button for COD----------------------- */}
+
             <div
               onClick={() => setMethod("cod")}
-              className="flex items-center gap-3 border py-2 px-3 cursor-pointer"
+              className="flex items-center gap-3 py-2 px-3 border cursor-pointer"
             >
               <p
                 className={`min-w-3.5 h-3.5 border rounded-full ${

@@ -14,19 +14,37 @@ const Orders = ({ token }) => {
     }
 
     try {
-      const responce = await axios.post(
+      const response = await axios.post(
         backend_url + "api/order/list",
         {},
         {
           headers: { token },
         }
       );
-      if (responce.data.success) {
-        setOrders(responce.data.orders);
+      if (response.data.success) {
+        setOrders(response.data.orders.reverse());
       } else {
-        toast.error(responce.data.message);
+        toast.error(response.data.message);
       }
     } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const statusHandler = async (event, orderId) => {
+    try {
+      const response = await axios.post(
+        backend_url + "api/order/status",
+        { orderId, status: event.target.value },
+        {
+          headers: { token },
+        }
+      );
+      if (response.data.success) {
+        await fetchAllOrders();
+      }
+    } catch (error) {
+      console.log(error);
       toast.error(error.message);
     }
   };
@@ -64,7 +82,7 @@ const Orders = ({ token }) => {
                 })}
               </div>
               <p className="pt-3 pb-2 font-medium">
-                {order.address.firstname + " " + order.address.lastname}
+                {order.address.firstName + " " + order.address.lastName}
               </p>
               <div>
                 <p>{order.address.street + ","}</p>
@@ -92,12 +110,16 @@ const Orders = ({ token }) => {
               {currency}
               {order.amount}
             </p>
-            <select value={order.status} className="p-2 font-semibold">
+            <select
+              onChange={(event) => statusHandler(event, order._id)}
+              value={order.status}
+              className="p-2 font-semibold"
+            >
               <option value="Order Placed">Order Placed</option>
               <option value="Packing">Packing</option>
               <option value="Shipped">Shipped</option>
               <option value="Out for Delivery">Out for Delivery</option>
-              <option value="Delivery">Delivery</option>
+              <option value="Delivered">Delivered</option>
             </select>
           </div>
         ))}
