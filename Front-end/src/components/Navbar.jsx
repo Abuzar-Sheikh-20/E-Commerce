@@ -142,6 +142,13 @@ const Navbar = () => {
           >
             Contact
           </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="text-sm py-2 pl-6 border border-2 font-bold"
+            to={"https://e-commerce-admin-topaz-kappa.vercel.app/"}
+          >
+            ADMIN Panel
+          </NavLink>
         </div>
       </div>
     </div>
